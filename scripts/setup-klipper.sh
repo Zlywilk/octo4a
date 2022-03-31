@@ -11,6 +11,7 @@ then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
+
 echo -e "${COL}Installing dependencies...\n${NC}"
 # install required dependencies
 apk add py3-cffi py3-greenlet linux-headers can-utils
@@ -46,5 +47,11 @@ chmod +x /root/extensions/klipper/start.sh
 chmod +x /root/extensions/klipper/kill.sh
 chmod 777 /root/extensions/klipper/start.sh
 chmod 777 /root/extensions/klipper/kill.sh
-
+read -p "Will you compile the source on the phone? (y/n): " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    apk add avr-libc gcc-arm-none-eabi newlib-arm-none-eabi python2 openssh
+    chmod -R 777 /klipper/lib
+    chmod -R 777 /klipper/scripts
+fi
 echo -e "${COL}\nKlipper installed! Please kill the app and restart it again to see it in extension settings${NC}"
